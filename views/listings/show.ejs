@@ -1,0 +1,133 @@
+<% layout("/layouts/boilerplate.ejs") %>
+<script>
+  const mapToken = "<%= MAP_TOKEN %>";
+  const listingLocation = "<%= listing.location %>"; 
+</script>
+ <div class="row mt-3" > <!-- margine from top -->
+    <div class="col-8 offset-3">
+        <!-- when we click on individual link on main page it leads us to individual listing details  -->
+    <h3><%= listing.title %> </h3>
+    </div>
+    <div class="card col-6 offset-3 show-card listing-card">
+<img 
+  src="<%= listing.image && listing.image.url ? listing.image.url : 'https://via.placeholder.com/300x200?text=No+Image' %>" 
+  class="card-img-top show-img" 
+  style="display: block; height: 20rem; object-fit: cover;" 
+  alt="listing_image">
+
+  <div class="card-body">
+    <!-- below line will show owner ka username in who created that specific listing -->
+    <p class="card-text">Owned By: <i><%= listing.owner.username %></i></p>
+    </br>
+         <p class="card-text"> <%= listing.description %></p>
+         <p class="card-text">Category: <%= listing.category %></p>
+          <p class="card-text"> &#8377; <%= listing.price.toLocaleString("en-IN") %></p>
+          <p class="card-text"> <%= listing.location %></p>
+          <p class="card-text"> <%= listing.country %></p>
+  </div>
+</div>
+<!--  -->
+    <!-- <ul>
+        <li><%= listing.title %></li>
+        <li><%= listing.description %></li> -->
+        <!-- in below & numbers represent rupees symbol and we converted price numbers to locale string 
+         and marked as IN to put commas accoring to India -->
+        <!-- <li> &#8377; <%= listing.price.toLocaleString("en-IN") %></li>
+        <li><%= listing.location %></li>
+         <li><%= listing.country %></li>
+    </ul> -->
+    <!--  -->
+
+    <br>
+<!-- basically in below code if currUser(extracted from locals in app.js) exists and currUser ki id , owner id se 
+ milti hai tab hee edit and delete button would be shown otherwise no -->
+    <% if(currUser && currUser._id.equals(listing.owner._id)) { %>
+    <!-- below is to show edit option when we go in specific listing info -->
+     <div class="btns">
+            <a href="/listings/<%= listing._id%>/edit" class="btn btn-dark col-1 offset-3 edit-btn">Edit</a> 
+     
+    <!-- below is to show the delete option -->
+         <form method="POST" action="/listings/<%= listing._id%>?_method=DELETE">
+            <button class="btn btn-dark  offset-5">Delete </button>
+         </form>
+     </div>  
+     <% } %>
+    </div>
+    <div>
+      
+     <!-- below is the code for creating div for reviews part -->
+<div class="col-8 offset-2"> <!-- centered -->
+  <% if(currUser) { %>
+    <hr>
+    <h4 class="card-text">Leave a Review</h4>
+    <form action="/listings/<%= listing.id %>/reviews" method="POST" novalidate class="needs-validation">
+      
+      <!-- star rating centered -->
+<div class="mb-3 ">
+  <label for="rating" class="form-label d-block">Rating</label>
+  <!-- below code copied from starability github from where we picked stars review rating -->
+  <fieldset class="starability-slot">
+  <legend>Rate this place:</legend>
+
+  <input type="radio" id="rate5" name="review[rating]" value="5" />
+  <label for="rate5" title="Amazing">5 stars</label>
+
+  <input type="radio" id="rate4" name="review[rating]" value="4" />
+  <label for="rate4" title="Very good">4 stars</label>
+
+  <input type="radio" id="rate3" name="review[rating]" value="3" />
+  <label for="rate3" title="Average">3 stars</label>
+
+  <input type="radio" id="rate2" name="review[rating]" value="2" />
+  <label for="rate2" title="Not good">2 stars</label>
+
+  <input type="radio" id="rate1" name="review[rating]" value="1" />
+  <label for="rate1" title="Terrible">1 star</label>
+</fieldset>
+
+</div>
+
+
+      <div class="mb-3 mt-3">
+        <label for="comment" class="form-label">Comments</label>
+        <textarea name="review[comment]" id="comment" cols="30" rows="5" class="form-control" required></textarea>
+        <div class="invalid-feedback">
+          Please submit some comments for review
+        </div>
+      </div>
+      <div>
+        <button class="btn btn-outline-dark">Submit</button>
+      </div>
+    </form>
+  <% } %>
+  <% if(listing.reviews.length>0) { %>
+  <!-- in below code whatever review we will wite below a specific list, it will show all reviews, iske liye we applied populate fun in show route -->
+  <div class="row">
+      <p class="mt-5"><b>All Reviews</b></p>
+    <% for(review of listing.reviews) { %> 
+      <!-- below is a bootstrap code -->
+      <div class="card col-md-5 ms-3 mb-3">
+        <div class="card-body">
+          <h5 class="card-title"><%= review.author.username %></h5>
+          <!-- below from starability github copied -->
+          <p class="starability-result card-text" data-rating="<%= review.rating %>">
+          </p>
+          <p class="card-text"><%= review.comment %></p>
+          <p class="card-text"><%= review.rating %> stars</p>
+          <form class="mb-3" method="POST" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
+            <button class="btn btn-sm btn-dark">Delete</button>
+          </form>
+        </div>
+      </div>
+    <% } %>
+  </div>
+  <% } %>
+  <!-- for map in each listing -->
+  <div class="col-8 mb-3">
+    <h3>Where you'll be</h3>
+      <div id="map" data-coordinates='<%= JSON.stringify(listing.geometry.coordinates) %>'></div>
+  </div>
+</div>
+<!-- map wali file being rendered here -->
+<script src="/js/map.js"></script>
+

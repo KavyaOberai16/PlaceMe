@@ -1,0 +1,4 @@
+# yaha woh files likheneg which r meant to be ignored and not be shown when we write git status, 
+# these files r not to be uploaded on github 
+.env
+node_modules/

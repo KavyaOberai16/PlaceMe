@@ -1,0 +1,82 @@
+ <% layout ("/layouts/boilerplate.ejs") %>
+<body>
+    <!-- this is the page where new listings details are added  -->
+    <div class="row">
+         <div class="col-8 offset-2">  <!--offset means it will bring orm to the center of the page -->
+            <br> <br>
+             <h3>Create New Listing</h3>
+    <!-- basically we hv wrote required for each field, that means the chrome browser will share its default design
+     that this field needs to be filled but when we use novalidate from bootstrap and use js file which is in public folder
+     and class which is needs-validation hen we get warning in bootstrap style -->
+     <!-- the below validation is for client side -->
+      <!-- enctype mutlipart means file can be converted to such thing that can be transferrable to backend, eg- image files -->
+    <form method="POST" action="/listings" novalidate class="needs-validation" enctype="multipart/form-data">
+        <div class="mb-3">
+             <label for="title" class="form-label">Title</label>
+            <input name="title" placeholder="Add a catchy title" type="text" class="form-control" required>
+            <div class="valid-feedback">Looks Good</div>
+            <div class="invalid-feedback">Title should be valid</div>
+        </div>
+        <div  class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea name="description" class="form-control" required></textarea>
+            <div class="valid-feedback">Looks Good</div>
+            <div class="invalid-feedback">Description should be valid</div>
+        </div>
+        <div class="mb-3">
+            <!-- ek select drop down humne create kiya hai to show various icons, and appoint that to listing -->
+            <label for="category" class="form-label">Choose Category</label>
+            <select class="form-select" name="category" placeholder="Choose your category"id="category" required>
+                <option value="Trending">Trending</option>
+                <option value="Rooms">Rooms</option>
+                <option value="Cities">Iconic Cities</option>
+                <option value="Mountains">Mountains</option>
+                <option value="Castles">Castles</option>
+                <option value="Pools">Amazing Pools</option>
+                <option value="Camping">Camping</option>
+                <option value="Farms">Farms</option>
+                <option value="Arctic">Arctic</option>
+                <option value="Domes">Domes</option>
+                <option value="Boats">Boats</option>
+            </select>
+        </div>
+
+        <!-- <div class="mb-3">
+             <label for="image" class="form-label">Image</label>
+             <input name="image" placeholder="enter image URL/LINK" type="text" class="form-control" required>
+        </div> -->
+
+         <div class="mb-3">
+             <label for="image" class="form-label">Upload Listing Image</label>
+             <br>
+             <!-- type is file for enctype -->
+             <input name="listing[image]" type="file" file for enctypeclass="form-control" required>
+        </div>
+
+        <div class="row">
+            <div class="mb-3 col-md-4">
+             <label for="price" class="form-label">Price</label>
+            <input name="price" placeholder="1200" class="form-control" required>
+            <div class="valid-feedback">Looks Good</div>
+            <div class="invalid-feedback">Price should be valid</div>
+        </div>
+        <div class="mb-3 col-md-8">
+             <label for="country" class="form-label">Country</label>
+             <input name="country" placeholder="enter country" type="text" class="form-control" required>
+             <div class="valid-feedback">Looks Good</div>
+             <div class="invalid-feedback">Country should be valid</div>
+        </div>
+        </div>
+
+        <div class="mb-3">
+             <label for="location" class="form-label">Location</label>
+             <input name="location" placeholder="enter location" type="text" class="form-control" required>
+             <div class="valid-feedback">Looks Good</div>
+             <div class="invalid-feedback">Location should be valid</div>
+        </div>
+
+        <button class="btn btn-dark add-btn">Add</button>
+        <br><br>
+    </form>
+    </div>
+    </div>

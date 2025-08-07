@@ -1,0 +1,108 @@
+<% layout("/layouts/boilerplate.ejs") %>
+ <%= success %><!--this came from flash that we used for alerts whenever new listing is added the msg will be shown on main page -->
+<body>
+    <!-- this is the main page where all listings are displayed based on their id -->
+     <!-- below are all the icons -->
+    <div id="filters">
+        <a href="/listings?category=Trending" class="filter" >
+            <div><i class="fa-solid fa-fire"></i></div>
+            <p>Trending</p>
+        </a>
+        <a href="/listings?category=Rooms" class="filter">
+            <div><i class="fa-solid fa-bed"></i></div>
+            <p>Rooms</p>
+        </a>
+        <a href="/listings?category=Cities" class="filter">
+            <div><i class="fa-solid fa-mountain-city"></i></div>
+            <p>Iconic Cities</p>
+        </a>
+        <a href="/listings?category=Mountains" class="filter">
+            <div><i class="fa-solid fa-mountain"></i></div>
+            <p>Mountains</p>
+        </a>
+        <a href="/listings?category=Castles" class="filter">
+            <div><i class="fa-brands fa-fort-awesome"></i></div>
+            <p>Castles</p>
+        </a>
+        <a href="/listings?category=Pools" class="filter">
+            <div><i class="fa-solid fa-person-swimming"></i></div>
+            <p>Amazing Pools</p>
+        </a>
+        <a href="/listings?category=Camping" class="filter">
+            <div><i class="fa-solid fa-campground"></i></div>
+            <p>Camping</p>
+        </a>
+        <a href="/listings?category=Farms" class="filter">
+            <div><i class="fa-solid fa-cow"></i></div>
+            <p>Farms</p>
+        </a>
+        <a href="/listings?category=Arctic" class="filter">
+            <div><i class="fa-regular fa-snowflake"></i></div>
+            <p>Arctic</p>
+        </a>
+        <a href="/listings?category=Domes" class="filter">
+            <div><i class="fa-solid fa-igloo"></i></div>
+            <p>Domes</p>
+        </a>
+        <a href="/listings?category=Boats" class="filter">
+            <div><i class="fa-solid fa-sailboat"></i></div>
+            <p>Boats</p>
+        </a>
+        <!-- below code has been taken from bootstrap, for toggle switch function -->
+        <div class="form-check-reverse form-switch">
+          <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+           <label class="form-check-label" for="flexSwitchCheckDefault">Total amount after taxes</label>
+        </div>
+    </div>
+    <!-- below is the card from bootstrap that will be applied to all lsitings -->
+
+     <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3"> <!--iska mtlb yeh hai ki large par 3 cars, medium par 2 and small par 1 dikhega -->
+    <% for(let listing of allListings) { %>
+        <a href="/listings/<%= listing._id %>" class="listing-link">
+    <div class="col listing-card"> 
+    <div class="card" >
+<img 
+  src="<%= listing.image && listing.image.url ? listing.image.url : 'https://via.placeholder.com/300x200?text=No+Image' %>" 
+  class="card-img-top show-img" 
+  style="display: block; height: 20rem; object-fit: cover;" 
+  alt="listing_image">
+
+     <div class="card-img-overlay"></div> <!--this will help in writing text or adding something on img -->
+    <div class="card-body">
+    <p class="card-text">
+        <b><%= listing.title %> <br></b><br>
+        &#8377; <%= listing.price.toLocaleString("en-IN") %> / night <!-- copied from show.ejs -->
+        <i class ="tax-info"> &nbsp; &nbsp; +18% GST</i>
+    </p>
+  </div>
+</div>
+</div>
+</a>
+  <% } %>
+  </div>
+  <script>
+    let taxSwitch = document.getElementById("flexSwitchCheckDefault"); //toggleswitch wale code mein jo id use hui hai usko use kiya
+    taxSwitch.addEventListener("click", ()=>{
+        let taxInfo = document.getElementsByClassName("tax-info");//jo upar class use ki usko bulaya
+            for(info of taxInfo){
+                //basically agar click kare and before click nhi dikh rha toh dikhao
+                if(info.style.display != "inline"){
+                    info.style.display = "inline";
+                } else{
+                    //otherwisechupa do
+                    info.style.display = "none";
+                }
+            }
+    });
+  </script>
+
+ <!-- <form method="GET" action="/listings/new">//we hv commented this code because when we created navbar we puted the link in the navbar.ejs which will redirect us
+        <button>Create New Listing</button>
+    </form> -->
+    <!-- <ul>
+        <% for(let listing of allListings) { %>
+            below id will be our anchor link through which we get indivdual listings info
+            <li> <a href = "/listings/<%= listing._id %>"> <%= listing.title%> </a></li>
+            <% } %>
+    </ul> -->
+</body>

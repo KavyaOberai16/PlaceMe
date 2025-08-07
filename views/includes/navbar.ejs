@@ -1,0 +1,37 @@
+<!-- this code is from bootstrap, and now this file link will be written in boilerplate.ejs so that it is shown in another 
+ pages as well -->
+ <link href= "/css/style.css" rel="stylesheet">
+<nav class="navbar navbar-expand-md bg-body-light border bottom sticky-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/listings"><i class="fa-solid fa-compass"></i></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" 
+    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link" href="/listings">Explore</a>
+      </div>
+      <!-- search bar on navbar opted from bootstrap -->
+      <div class="navbar-nav ms-auto">
+    <form class="d-flex">
+      <input class="form-control me-2 search-inp" type="search" placeholder="Search Destinations" aria-label="Search">
+      <button class="btn search-btn" type="submit"><i class="fa-solid fa-magnifying-glass">Search</i></button>
+    </form>
+      </div> 
+        <div class="navbar-nav ms-auto">
+          <a class="nav-link" href="/listings/new">Place Your Home</a>  
+          <!-- in app.js we created currUser which has req.user which is info of the user -->
+           <!-- i below code if nhi hain user, then only show signup and login options -->
+              <% if(!currUser) { %> 
+        <a class="nav-link" href="/signup"><b>Sign up</b></a>
+        <a class="nav-link" href="/login"><b>Login</b></a>
+        <% } %> 
+        <!-- if already hain user then only logout option will be shown -->
+        <% if(currUser) { %>
+          <a class="nav-link" href="/logout">Logout</a>  
+        <% } %>
+      </div>
+    </div>
+  </div>
+</nav>

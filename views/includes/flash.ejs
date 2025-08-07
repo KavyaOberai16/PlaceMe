@@ -1,0 +1,14 @@
+<!-- this way har ek page mein alert aaega if any error or success task is done -->
+ <% if(success && success.length){ %>  <!--it means success task kuch hona chahiye and uski length should be greater than 0 -->
+<div class="alert alert-success alert-dismissible fade show col-6 offset-3 d-flex justify-content-between align-items-center" role="alert">
+    <span><%= success %></span>
+    <button type="button" class="btn-close ms-3" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+<% } %>
+
+<% if(error && error.length){ %>
+<div class="alert alert-danger alert-dismissible fade show col-6 offset-3 d-flex justify-content-between align-items-center" role="alert">
+    <span><%= error %></span>
+    <button type="button" class="btn-close ms-3" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+<% } %>
